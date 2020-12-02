@@ -1,0 +1,26 @@
+/*npx install-peerdeps --dev eslint-config-wesbos 
+
+"scripts": {
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix"
+},
+
+*/
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false
+      }
+    ],
+    "quotes": [
+      2,
+      "double"
+    ],
+  },
+  "root": true
+}
