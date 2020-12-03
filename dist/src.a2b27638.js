@@ -124,13 +124,13 @@ function Slider(slider) {
   } // create some variables for working with the slider
 
 
-  var current;
   var prev;
+  var current;
   var next; // select the elements needed for the slider
 
   var slides = slider.querySelector(".slides");
-  var prevButton = document.querySelector(".goToPrev");
-  var nextButton = document.querySelector(".goToNext");
+  var prevButton = slider.querySelector(".goToPrev");
+  var nextButton = slider.querySelector(".goToNext");
 
   function startSlider() {
     current = slider.querySelector(".current") || slides.firstElementChild;
@@ -143,11 +143,46 @@ function Slider(slider) {
     current.classList.add("current");
     prev.classList.add("prev");
     next.classList.add("next");
+  }
+
+  function move(direction) {
+    var _prev$classList, _current$classList, _next$classList;
+
+    // first strip all the classes off the current slides
+    var classesToRemove = ["prev", "current", "next"];
+
+    (_prev$classList = prev.classList).remove.apply(_prev$classList, classesToRemove);
+
+    (_current$classList = current.classList).remove.apply(_current$classList, classesToRemove);
+
+    (_next$classList = next.classList).remove.apply(_next$classList, classesToRemove);
+
+    if (direction === "back") {
+      // make a new array of the new values and destructure them over and into the prev, current and next variables
+      var _ref = [// get the prev slide, if there is none, get the last slide from the entire slider for wrapping
+      prev.previousElementSibling || slides.lastElementChild, prev, current];
+      prev = _ref[0];
+      current = _ref[1];
+      next = _ref[2];
+    } else {
+      var _ref2 = [current, next, // get the next slide, or if its at the end, loop around and grab the first slide
+      next.nextElementSibling || slides.firstElementChild];
+      prev = _ref2[0];
+      current = _ref2[1];
+      next = _ref2[2];
+    }
+
+    applyClasses();
   } // when this slider is created run the start slider function
 
 
   startSlider();
-  applyClasses();
+  applyClasses(); // Event listeners
+
+  prevButton.addEventListener("click", function () {
+    return move("back");
+  });
+  nextButton.addEventListener("click", move);
 }
 
 var mySlider = Slider(document.querySelector(".slider"));
@@ -180,7 +215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54972" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49453" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
